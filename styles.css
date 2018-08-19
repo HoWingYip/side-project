@@ -1,8 +1,12 @@
 .editor {
   resize: vertical;
-  width: 100%;
+  width: -webkit-fill-available;
 }
 
 .page-title {
   margin-top: 0px;
+}
+
+.topbar {
+  width: -webkit-fill-available;
 }
