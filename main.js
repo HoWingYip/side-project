@@ -1,3 +1,10 @@
+//my code
+var fs = require('fs');
+fs.writeFile('newfile.txt', 'testing', function(err) {
+  if(err) throw (err);
+  console.log('Saved!');
+});
+
 const {app, BrowserWindow} = require('electron')
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -47,7 +54,3 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-
-//my code!
-const {dialog} = require('electron');
-
