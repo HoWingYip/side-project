@@ -1,6 +1,13 @@
 //my code
+//var remote = require('electron');
+const {ipcMain} = require('electron');
+ipcMain.on('asynchronous-message', (event, arg) => {
+  console.log(arg);
+});
+
 var fs = require('fs');
-fs.writeFile('newfile.txt', 'testing', function(err) {
+var filecontent = "testing";
+fs.writeFile('newfile.txt', filecontent, function(err) {
   if(err) throw (err);
   console.log('Saved!');
 });
@@ -8,7 +15,7 @@ fs.writeFile('newfile.txt', 'testing', function(err) {
 //make this happen only on pressing of 'Save'
 //accomplishment!!1!!1
 
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow} = require('electron');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
