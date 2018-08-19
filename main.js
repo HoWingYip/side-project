@@ -4,6 +4,9 @@ fs.writeFile('newfile.txt', 'testing', function(err) {
   if(err) throw (err);
   console.log('Saved!');
 });
+//saves newfile.txt with content 'testing' on npm start
+//make this happen only on pressing of 'Save'
+//accomplishment!!1!!1
 
 const {app, BrowserWindow} = require('electron')
 
