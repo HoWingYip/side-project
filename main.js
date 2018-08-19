@@ -1,16 +1,18 @@
 //my code
 //var remote = require('electron');
 const {ipcMain} = require('electron');
-ipcMain.on('asynchronous-message', (event, arg) => {
+ipcMain.on('synchronous-message', arg => {
   console.log(arg);
 });
 
 var fs = require('fs');
+/*
 var filecontent = "testing";
 fs.writeFile('newfile.txt', filecontent, function(err) {
   if(err) throw (err);
   console.log('Saved!');
 });
+*/
 //saves newfile.txt with content 'testing' on npm start
 //make this happen only on pressing of 'Save'
 //accomplishment!!1!!1
@@ -23,7 +25,11 @@ let win
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({width: 800, height: 600})
+  win = new BrowserWindow({show: false});
+  win.once('ready-to-show', () => {
+    win.show();
+  });
+  win.maximize();
 
   // and load the index.html of the app.
   win.loadFile('index.html')

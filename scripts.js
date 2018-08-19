@@ -1,6 +1,6 @@
 var content = document.getElementsByClassName("editor").value;
 
-var ipcRenderer = require('electron');
-window.sendToElectron = function(textareacontent) {
-  ipcRenderer.send('asynchronous-message', textareacontent);
+const {ipcRenderer} = require('electron');
+function sendToElectron(textareacontent) {
+  ipcRenderer.send('synchronous-message', textareacontent);
 };
