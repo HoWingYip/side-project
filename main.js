@@ -4,12 +4,16 @@ const {ipcMain} = require('electron');
 //do NOT change between ES6 and JS syntax because bloody MAGIC
 var fs = require('fs');
 //receives text from ipcRenderer
-ipcMain.on('asynchronous-message', function (a, texttosave) {
+//a is a useless argument to put texttosave in second position
+ipcMain.on('asynchronous-message', function (filename, texttosave) {
   //logs message in console
+  console.log(filename);
   console.log(texttosave);
-  //writes message to disk in "newfile.txt" (change later)
-  fs.writeFile('newfile.txt', texttosave, function(err) {
-    if(err) throw (err);
+  //filename = filename.toString();
+  //console.log(typeof filename);
+  //circular structure buggie
+  fs.writeFile(filename+".txt", texttosave, function(err) {
+    if(err) throw err;
     console.log('Saved!');
   });
 });
@@ -18,7 +22,7 @@ const {app, BrowserWindow} = require('electron');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win
+let win;
 
 function createWindow () {
   // Create the browser window.
@@ -33,7 +37,7 @@ function createWindow () {
   win.maximize();
 
   // and load the index.html of the app.
-  win.loadFile('index.html')
+  win.loadFile('index.html');
 
   // Open the DevTools (disabled by me).
   //win.webContents.openDevTools()
@@ -43,31 +47,31 @@ function createWindow () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    win = null
-  })
+    win = null;
+  });
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
-})
+});
 
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (win === null) {
-    createWindow()
+    createWindow();
   }
-})
+});
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
