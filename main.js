@@ -1,32 +1,31 @@
 //my code
 //var remote = require('electron');
-const {ipcMain} = require('electron');
+const { ipcMain } = require('electron');
 //do NOT change between ES6 and JS syntax because bloody MAGIC
 var fs = require('fs');
 //receives text from ipcRenderer
-//a is a useless argument to put texttosave in second position
-ipcMain.on('asynchronous-message', function (filename, texttosave) {
-  //logs message in console
+ipcMain.on('asynchronous-message', function (filename, extension, texttosave) {
   console.log(filename);
+  console.log(extension);
   console.log(texttosave);
   //filename = filename.toString();
   //console.log(typeof filename);
   //circular structure buggie
-  fs.writeFile(filename+".txt", texttosave, function(err) {
-    if(err) throw err;
+  fs.writeFile(filename + extension, texttosave, function (err) {
+    if (err) throw err;
     console.log('Saved!');
   });
 });
 
-const {app, BrowserWindow} = require('electron');
+const { app, BrowserWindow } = require('electron');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 
-function createWindow () {
+function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({show: false});
+  win = new BrowserWindow({ show: false });
   win.once('ready-to-show', () => {
     win.show();
   });
