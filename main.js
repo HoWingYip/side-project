@@ -1,25 +1,18 @@
 //my code
 //var remote = require('electron');
 const {ipcMain} = require('electron');
+//do NOT change between ES6 and JS syntax because bloody MAGIC
 var fs = require('fs');
+//receives text from ipcRenderer
 ipcMain.on('asynchronous-message', function (a, texttosave) {
+  //logs message in console
   console.log(texttosave);
+  //writes message to disk in "newfile.txt" (change later)
   fs.writeFile('newfile.txt', texttosave, function(err) {
     if(err) throw (err);
     console.log('Saved!');
   });
 });
-
-/*
-var filecontent = "testing";
-fs.writeFile('newfile.txt', filecontent, function(err) {
-  if(err) throw (err);
-  console.log('Saved!');
-});
-*/
-//saves newfile.txt with content 'testing' on npm start
-//make this happen only on pressing of 'Save'
-//accomplishment!!1!!1
 
 const {app, BrowserWindow} = require('electron');
 
