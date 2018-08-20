@@ -1,11 +1,15 @@
 //my code
 //var remote = require('electron');
 const {ipcMain} = require('electron');
-ipcMain.on('synchronous-message', arg => {
-  console.log(arg);
+var fs = require('fs');
+ipcMain.on('asynchronous-message', function (a, texttosave) {
+  console.log(texttosave);
+  fs.writeFile('newfile.txt', texttosave, function(err) {
+    if(err) throw (err);
+    console.log('Saved!');
+  });
 });
 
-var fs = require('fs');
 /*
 var filecontent = "testing";
 fs.writeFile('newfile.txt', filecontent, function(err) {
@@ -29,6 +33,10 @@ function createWindow () {
   win.once('ready-to-show', () => {
     win.show();
   });
+  //testing ipc
+  /*win.once('did-finish-load', function() {
+    win.webContents.send('onload-user', 'test');
+  });*/
   win.maximize();
 
   // and load the index.html of the app.
