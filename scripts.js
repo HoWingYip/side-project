@@ -5,4 +5,4 @@ function sendToElectron(filename, textareacontent) {
   console.log(textareacontent);
   ipcRenderer.send('asynchronous-message', filename);
   ipcRenderer.send('asynchronous-message', textareacontent);
-};
+}
