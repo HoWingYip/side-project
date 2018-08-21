@@ -4,20 +4,29 @@ const { ipcMain } = require('electron');
 //do NOT change between ES6 and JS syntax because bloody MAGIC
 var fs = require('fs');
 //receives text from ipcRenderer
-/*
-ipcMain.on('asynchronous-message', function (a, filedata) {
-  console.log(filedata);
+ipcMain.on('saveFile', function (a, filedata) {
+  const {dialog} = require('electron');
+  //show the dialog
+  dialog.showSaveDialog(filedata.filename + filedata.extension, function() {
+    if(filedata.filename === undefined) {
+      console.log("Filename not provided");
+      return;
+    }
+    //write the file
+    fs.writeFile(filedata.filename + filedata.extension, filedata.content, function (err) {
+      if (err) throw err;
+      console.log('Saved!');
+    });
+  });
+  /*console.log(filedata);
   fs.writeFile(filedata.filename + filedata.extension, filedata.content, function (err) {
     if (err) throw err;
     console.log('Saved!');
-  });
+  });*/
 });
-*/
 //commented it out to make way for dialog!
 
-//save/open dialog
-
-
+//app core code, basically
 const { app, BrowserWindow } = require('electron');
 
 // Keep a global reference of the window object, if you don't, the window will

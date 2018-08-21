@@ -3,7 +3,7 @@ const {ipcRenderer} = require('electron');
 function sendToElectron(filename, extension, textareacontent) {
   console.log(filename);
   console.log(textareacontent);
-  ipcRenderer.send('asynchronous-message', {
+  ipcRenderer.send('saveFile', {
     filename: filename,
     extension: extension,
     content: textareacontent
