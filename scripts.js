@@ -11,4 +11,8 @@ function sendToElectron(filename, extension, textareacontent) {
 }
 //dialog - not showing...?
 const { dialog } = require('electron').remote;
-console.log(dialog);
+document.querySelector('#saveButton').addEventListener('click', function() {
+  dialog.showSaveDialog({
+    defaultPath: '~/Documents'
+  });
+});

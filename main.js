@@ -4,6 +4,7 @@ const { ipcMain } = require('electron');
 //do NOT change between ES6 and JS syntax because bloody MAGIC
 var fs = require('fs');
 //receives text from ipcRenderer
+/*
 ipcMain.on('asynchronous-message', function (a, filedata) {
   console.log(filedata);
   fs.writeFile(filedata.filename + filedata.extension, filedata.content, function (err) {
@@ -11,6 +12,8 @@ ipcMain.on('asynchronous-message', function (a, filedata) {
     console.log('Saved!');
   });
 });
+*/
+//commented it out to make way for dialog!
 
 //save/open dialog
 
