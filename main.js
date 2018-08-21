@@ -13,18 +13,13 @@ ipcMain.on('saveFile', function (a, filedata) {
       return;
     }
     //write the file
+    //ok apparently at the moment it saves it when the dialog gets closed
     fs.writeFile(filedata.filename + filedata.extension, filedata.content, function (err) {
       if (err) throw err;
       console.log('Saved!');
     });
   });
-  /*console.log(filedata);
-  fs.writeFile(filedata.filename + filedata.extension, filedata.content, function (err) {
-    if (err) throw err;
-    console.log('Saved!');
-  });*/
 });
-//commented it out to make way for dialog!
 
 //app core code, basically
 const { app, BrowserWindow } = require('electron');
