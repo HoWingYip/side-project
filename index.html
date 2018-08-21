@@ -16,7 +16,11 @@
   <!--top bar-->
   <div class="w3-container w3-grey w3-card w3-bar w3-round w3-margin topbar">
     <button class="w3-button">Open</button>
-    <button class="w3-button" onclick="sendToElectron(document.getElementsByClassName('filename')[0].value, document.getElementsByClassName('extension')[0].value, document.getElementsByClassName('editor')[0].value);">Save</button>
+    <button class="w3-button" onclick="sendToElectron(
+      document.getElementsByClassName('filename')[0].value,
+      document.getElementsByClassName('extension')[0].value,
+      document.getElementsByClassName('editor')[0].value
+    );">Save</button>
   </div>
   <!--text editor-->
   <textarea name="Filename" class="filename w3-card w3-padding w3-margin-left w3-round" placeholder="Filename" rows="1" autofocus></textarea>

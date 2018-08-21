@@ -4,18 +4,16 @@ const { ipcMain } = require('electron');
 //do NOT change between ES6 and JS syntax because bloody MAGIC
 var fs = require('fs');
 //receives text from ipcRenderer
-ipcMain.on('asynchronous-message', function (filename, extension, texttosave) {
-  console.log(filename);
-  console.log(extension);
-  console.log(texttosave);
-  //filename = filename.toString();
-  //console.log(typeof filename);
-  //circular structure buggie
-  fs.writeFile(filename + extension, texttosave, function (err) {
+ipcMain.on('asynchronous-message', function (a, filedata) {
+  console.log(filedata);
+  fs.writeFile(filedata.filename + filedata.extension, filedata.content, function (err) {
     if (err) throw err;
     console.log('Saved!');
   });
 });
+
+//save/open dialog
+
 
 const { app, BrowserWindow } = require('electron');
 
