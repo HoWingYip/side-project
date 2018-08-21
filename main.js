@@ -7,11 +7,13 @@ var fs = require('fs');
 ipcMain.on('saveFile', function (a, filedata) {
   const {dialog} = require('electron');
   //show the dialog
-  dialog.showSaveDialog(filedata.filename + filedata.extension, function() {
-    if(filedata.filename === undefined) {
-      console.log("Filename not provided");
-      return;
-    }
+  dialog.showSaveDialog({
+    title: "foo",
+    defaultPath: '~/Document.txt' 
+    //change HTML to show filename AFTER save (not to type in filename in page!)
+    //return chosen filename to main process
+    //use node fs to save
+  }, function() {
     //write the file
     //ok apparently at the moment it saves it when the dialog gets closed
     fs.writeFile(filedata.filename + filedata.extension, filedata.content, function (err) {
