@@ -1,13 +1,7 @@
 .filename {
   display: inline-block;
   resize: none;
-  width: 70%;
-}
-
-.extension {
-  display: inline-block;
-  resize: none;
-  width: calc(30% - 37px);
+  width: -webkit-fill-available;
 }
 
 .editor {

@@ -1,11 +1,10 @@
 const {ipcRenderer} = require('electron');
 
-function sendToElectron(filename, extension, textareacontent) {
-  console.log(filename);
+function sendToElectron(textareacontent) {
+  //console.log(filename);
+  //not used anymore (chosen in dialog)
   console.log(textareacontent);
   ipcRenderer.send('saveFile', {
-    filename: filename,
-    extension: extension,
     content: textareacontent
   });
 }

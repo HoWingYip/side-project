@@ -10,15 +10,13 @@ ipcMain.on('saveFile', function (a, filedata) {
   dialog.showSaveDialog({
     title: "foo",
     defaultPath: '~/Document.txt' 
-    //change HTML to show filename AFTER save (not to type in filename in page!)
-    //return chosen filename to main process
     //use node fs to save
   }, function(filename) {
     //write the file
-    //ok apparently at the moment it saves it when the dialog gets closed
     fs.writeFile(filename, filedata.content, function (err) {
       if (err) throw err;
       console.log('Saved!');
+      //change HTML to show filename AFTER save (not to type in filename in page!)
     });
   });
 });
