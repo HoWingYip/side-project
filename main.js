@@ -6,9 +6,8 @@ const {dialog} = require('electron');
 //do NOT change between ES6 and JS syntax because bloody MAGIC
 //receives text from ipcRenderer
 ipcMain.on('saveFile', function (fileDataSend, filedata) {
-  //show the dialog
+  //show save dialog
   dialog.showSaveDialog({
-    title: "foo",
     defaultPath: '~/Document.txt',
     filters: [
       {name: 'Text Files', extensions: ['txt']},
@@ -34,6 +33,24 @@ ipcMain.on('saveFile', function (fileDataSend, filedata) {
       "TypeError: path must be a string or Buffer"
       is thrown
       */
+    }
+  });
+});
+
+ipcMain.on('openFile', function () {
+  //show open dialog
+  dialog.showOpenDialog({
+    defaultPath: '~/',
+    filters: [
+      {name: 'Text Files', extensions: ['txt']},
+      {name: 'All Files', extensions: ['*']}
+    ]
+  }, function() {
+    //open the file
+    try {
+      //ESLint SHUT UP
+    } catch {
+      //ESLint SHUT UP
     }
   });
 });

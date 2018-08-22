@@ -15,10 +15,8 @@
   <!--main editor-->
   <!--top bar-->
   <div class="w3-container w3-grey w3-card w3-bar w3-round w3-margin topbar">
-    <button class="w3-button">Open</button>
-    <button class="w3-button" id="saveButton" onclick="sendToElectron(
-      //document.getElementsByClassName('filename')[0].value,
-      //document.getElementsByClassName('extension')[0].value,
+    <button class="w3-button" id="openButton" onclick="open();">Open</button>
+    <button class="w3-button" id="saveButton" onclick="save(
       document.getElementsByClassName('editor')[0].value
     );">Save</button>
   </div>
