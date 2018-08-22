@@ -46,12 +46,9 @@ ipcMain.on('openFile', function () {
       {name: 'All Files', extensions: ['*']}
     ]
   }, function() {
+    console.log("wtf?");
     //open the file
-    try {
-      //ESLint SHUT UP
-    } catch {
-      //ESLint SHUT UP
-    }
+    fs.readFile();
   });
 });
 

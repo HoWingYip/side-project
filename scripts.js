@@ -16,4 +16,5 @@ ipcRenderer.on('filenameSend', function(a, filename) {
 //open file
 function open() {
   ipcRenderer.send('openFile', {});
+  console.log("wtf?");
 }

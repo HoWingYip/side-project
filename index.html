@@ -16,6 +16,10 @@
   <!--top bar-->
   <div class="w3-container w3-grey w3-card w3-bar w3-round w3-margin topbar">
     <button class="w3-button" id="openButton" onclick="open();">Open</button>
+    <!--
+    WTF?! WINDOW CONTENTS CLEARED ON OPEN BUTTON CLICK!
+    Is not a JS problem. open() works correctly.
+    -->
     <button class="w3-button" id="saveButton" onclick="save(
       document.getElementsByClassName('editor')[0].value
     );">Save</button>
