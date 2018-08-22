@@ -9,16 +9,16 @@ ipcMain.on('saveFile', function (a, filedata) {
   //show the dialog
   dialog.showSaveDialog({
     title: "foo",
-    defaultPath: '~/Document.txt' 
+    defaultPath: '~/Document.txt',
+    filters: [
+      {name: 'Text Files', extensions: ['txt']},
+      {name: 'All Files', extensions: ['*']}
+    ]
     //use node fs to save
   }, function(filename) {
     //write the file
-    if (filename === undefined) {
-      console.log("filename not provided");
-    }
     try {
       fs.writeFile(filename, filedata.content, function() {
-        //if (err) throw err;
         console.log('Saved!');
         //change HTML to show filename AFTER save (not to type in filename in page!)
         //send filename back to ipcRenderer to make filename box show filename
