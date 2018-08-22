@@ -1,17 +1,13 @@
 const {ipcRenderer} = require('electron');
 
 function sendToElectron(textareacontent) {
-  //console.log(filename);
-  //not used anymore (chosen in dialog)
-  console.log(textareacontent);
+  //console.log(textareacontent);
   ipcRenderer.send('saveFile', {
     content: textareacontent
   });
 }
-//dialog - not showing...?
-const { dialog } = require('electron').remote;
-document.querySelector('#saveButton').addEventListener('click', function() {
-  dialog.showSaveDialog({
-    defaultPath: '~/Documents'
-  });
+
+ipcRenderer.on('filenameSend', function(a, filename) {
+  console.log("File path:", filename.filenameToDisplay);
+  document.getElementsByClassName('filename')[0].innerHTML = "Path: " + filename.filenameToDisplay;
 });

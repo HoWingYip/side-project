@@ -1,11 +1,11 @@
 //my code
 //var remote = require('electron');
 const { ipcMain } = require('electron');
-//do NOT change between ES6 and JS syntax because bloody MAGIC
 var fs = require('fs');
+const {dialog} = require('electron');
+//do NOT change between ES6 and JS syntax because bloody MAGIC
 //receives text from ipcRenderer
-ipcMain.on('saveFile', function (a, filedata) {
-  const {dialog} = require('electron');
+ipcMain.on('saveFile', function (fileDataSend, filedata) {
   //show the dialog
   dialog.showSaveDialog({
     title: "foo",
@@ -22,6 +22,10 @@ ipcMain.on('saveFile', function (a, filedata) {
         console.log('Saved!');
         //change HTML to show filename AFTER save (not to type in filename in page!)
         //send filename back to ipcRenderer to make filename box show filename
+        fileDataSend.sender.send('filenameSend', {
+          filenameToDisplay: filename
+          //filenameToDisplay is the filename in the object sent to ipcRenderer
+        });
       });
     } catch(error) {
       console.error(error);
