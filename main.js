@@ -13,11 +13,24 @@ ipcMain.on('saveFile', function (a, filedata) {
     //use node fs to save
   }, function(filename) {
     //write the file
-    fs.writeFile(filename, filedata.content, function (err) {
-      if (err) throw err;
-      console.log('Saved!');
-      //change HTML to show filename AFTER save (not to type in filename in page!)
-    });
+    if (filename === undefined) {
+      console.log("filename not provided");
+    }
+    try {
+      fs.writeFile(filename, filedata.content, function() {
+        //if (err) throw err;
+        console.log('Saved!');
+        //change HTML to show filename AFTER save (not to type in filename in page!)
+        //send filename back to ipcRenderer to make filename box show filename
+      });
+    } catch(error) {
+      console.error(error);
+      /*
+      bug: if save is cancelled:
+      "TypeError: path must be a string or Buffer"
+      is thrown
+      */
+    }
   });
 });
 
