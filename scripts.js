@@ -10,12 +10,16 @@ function saveFile(textareacontent) {
 
 ipcRenderer.on('filenameSend', function(a, filename) {
   console.log("File path:", filename.filenameToDisplay);
-  document.getElementsByClassName('filename')[0].innerHTML = "Path: " + filename.filenameToDisplay;
+  document.getElementById('filename').innerHTML = "Path: " + filename.filenameToDisplay;
 });
 
 //open file
 function openFile() {
   ipcRenderer.send('openFile', {});
-  console.log("wtf?");
-  //judging by absence of above statement on button click, this is probably a HTML problem...?
 }
+
+ipcRenderer.on('allDataSend', function(a, fileContents) {
+  console.log(fileContents);
+  document.getElementById('filename').innerHTML = "Path: " + fileContents.filename;
+  document.getElementById('editor').innerHTML = fileContents.fileContents;
+});

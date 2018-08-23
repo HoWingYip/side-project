@@ -1,10 +1,10 @@
-.filename {
+#filename {
   display: inline-block;
   resize: none;
   width: -webkit-fill-available;
 }
 
-.editor {
+#editor {
   resize: vertical;
   width: -webkit-fill-available;
 }

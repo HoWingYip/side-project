@@ -37,18 +37,30 @@ ipcMain.on('saveFile', function (fileDataSend, filedata) {
   });
 });
 
-ipcMain.on('openFile', function () {
+ipcMain.on('openFile', function (fileContentSend) {
   //show open dialog
   dialog.showOpenDialog({
     defaultPath: '~/',
     filters: [
       {name: 'Text Files', extensions: ['txt']},
       {name: 'All Files', extensions: ['*']}
-    ]
-  }, function() {
-    console.log("wtf?");
+    ],
+    properties: ['openFile']
+  }, function(filename) {
     //open the file
-    fs.readFile();
+    try {
+      fs.readFile(filename[0], "utf8", function(err, data) {
+        //err is useless because it's gonna be caught later
+        console.log("Opened!");
+        //console.log(data);
+        fileContentSend.sender.send('allDataSend', {
+          filename: filename[0],
+          fileContents: data
+        });
+      });
+    } catch(error) {
+      console.error(error);
+    }
   });
 });
 
@@ -65,10 +77,6 @@ function createWindow() {
   win.once('ready-to-show', () => {
     win.show();
   });
-  //testing ipc
-  /*win.once('did-finish-load', function() {
-    win.webContents.send('onload-user', 'test');
-  });*/
   win.maximize();
 
   // and load the index.html of the app.
