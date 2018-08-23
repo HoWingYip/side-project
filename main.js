@@ -4,7 +4,32 @@ const { ipcMain } = require('electron');
 var fs = require('fs');
 const {dialog} = require('electron');
 //do NOT change between ES6 and JS syntax because bloody MAGIC
-//receives text from ipcRenderer
+
+ipcMain.on('newFile', function(createNewFile) {
+  //show save dialog (new file)
+  dialog.showSaveDialog({
+    defaultPath: '~/Document.txt',
+    filters: [
+      {name: 'Text Files', extensions: ['txt']},
+      {name: 'All Files', extensions: ['*']}
+    ], function(filename) {
+      //write the file
+      try {
+        fs.writeFile(filename, "", function() {
+          //writes blank file to disk because creating new
+          console.log('New file created!');
+          createNewFile.sender.send('newFileData', {
+            filenameToDisplay: filename
+            //filenameToDisplay is the filename in the object sent to ipcRenderer
+          });
+        });
+      } catch(error) {
+        console.error(error);
+      }
+    }
+  });
+});
+
 ipcMain.on('saveFile', function (fileDataSend, filedata) {
   //show save dialog
   dialog.showSaveDialog({
@@ -63,6 +88,7 @@ ipcMain.on('openFile', function (fileContentSend) {
     }
   });
 });
+
 
 //app core code, basically
 const { app, BrowserWindow } = require('electron');

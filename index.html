@@ -15,6 +15,7 @@
   <!--main editor-->
   <!--top bar-->
   <div class="w3-container w3-grey w3-card w3-bar w3-round w3-margin topbar">
+    <button class="w3-button" id="newButton" onclick="newFile();">New File</button>
     <button class="w3-button" id="openButton" onclick="openFile();">Open</button>
     <button class="w3-button" id="saveButton" onclick="saveFile(
       document.getElementById('editor').value
@@ -22,6 +23,6 @@
   </div>
   <textarea name="Filename" id="filename" class="w3-card w3-padding w3-margin-left w3-margin-right w3-round" placeholder="Filename" rows="1" readonly>Path: (file not saved)</textarea>
   <!--make this appear only after filename received-->
-  <textarea name="Editor" id="editor" class="editor w3-card w3-padding w3-margin-left w3-margin-right w3-margin-bottom w3-round" placeholder="Your text here" autofocus></textarea>
+  <textarea name="Editor" id="editor" class="w3-card w3-padding w3-margin-left w3-margin-right w3-margin-bottom w3-round" placeholder="Your text here" autofocus></textarea>
 </body>
 </html>

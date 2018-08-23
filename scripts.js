@@ -1,5 +1,15 @@
 const {ipcRenderer} = require('electron');
 
+//create new file
+function newFile() {
+  ipcRenderer.send('newFile', {});
+}
+
+ipcRenderer.on('newFileData', function(a, filename) {
+  console.log("File path:", filename.filenameToDisplay);
+  document.getElementById('filename').innerHTML = "Path: " + filename.filenameToDisplay;
+});
+
 //save file
 function saveFile(textareacontent) {
   //console.log(textareacontent);
@@ -21,5 +31,6 @@ function openFile() {
 ipcRenderer.on('allDataSend', function(a, fileContents) {
   console.log(fileContents);
   document.getElementById('filename').innerHTML = "Path: " + fileContents.filename;
+  //document.getElementById('editor').innerHTML = "";
   document.getElementById('editor').innerHTML = fileContents.fileContents;
 });
