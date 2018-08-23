@@ -1,7 +1,7 @@
 const {ipcRenderer} = require('electron');
 
 //save file
-function save(textareacontent) {
+function saveFile(textareacontent) {
   //console.log(textareacontent);
   ipcRenderer.send('saveFile', {
     content: textareacontent
@@ -14,7 +14,8 @@ ipcRenderer.on('filenameSend', function(a, filename) {
 });
 
 //open file
-document.open = () => {
+function openFile() {
   ipcRenderer.send('openFile', {});
   console.log("wtf?");
+  //judging by absence of above statement on button click, this is probably a HTML problem...?
 }
