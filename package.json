@@ -1,7 +1,7 @@
 {
   "name": "side-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "Hello, I'm Wing Yip. I'm experimenting with the Electron framework to build a simple text editor that can open and save .txt files to a machine. Any help in the form of contributing to the repo or teaching me how to use Electron is appreciated more than you can imagine!",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -18,7 +18,11 @@
   },
   "homepage": "https://github.com/HoWingYip/side-project#readme",
   "devDependencies": {
-    "electron": "^2.0.7"
+    "electron": "^2.0.7",
+    "fs": "0.0.1-security"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "keywords": [
+    "electron"
+  ]
 }
