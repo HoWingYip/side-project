@@ -12,7 +12,8 @@ ipcMain.on('newFile', function(createNewFile) {
     filters: [
       {name: 'Text Files', extensions: ['txt']},
       {name: 'All Files', extensions: ['*']}
-    ], function(filename) {
+    ]
+  }, function(filename) {
       //write the file
       try {
         fs.writeFile(filename, "", function() {
@@ -26,7 +27,6 @@ ipcMain.on('newFile', function(createNewFile) {
       } catch(error) {
         console.error(error);
       }
-    }
   });
 });
 
