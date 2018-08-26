@@ -136,7 +136,7 @@ ipcMain.on('openFile', function (fileContentSend) {
         savedAlready = true;
         console.log(savedAlready);
         //set global filename variable
-        filenameGlobal = filename;
+        filenameGlobal = filename[0];
       });
     } catch(error) {
       console.error(error);
