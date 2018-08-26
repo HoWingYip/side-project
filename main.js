@@ -5,6 +5,11 @@ var fs = require('fs');
 const {dialog} = require('electron');
 //do NOT change between ES6 and JS syntax because bloody MAGIC
 
+//boolean to determine whether or not to open dialogs
+//(if you've saved it already you don't want to save it again with a dialog)
+var savedAlready = false;
+var filenameGlobal;
+
 ipcMain.on('newFile', function(createNewFile) {
   //show save dialog (new file)
   dialog.showSaveDialog({
@@ -23,6 +28,12 @@ ipcMain.on('newFile', function(createNewFile) {
             filenameToDisplay: filename
             //filenameToDisplay is the filename in the object sent to ipcRenderer
           });
+
+          //don't display save dialog again
+          savedAlready = true;
+          console.log(savedAlready);
+          //set global filename variable
+          filenameGlobal = filename;
         });
       } catch(error) {
         console.error(error);
@@ -32,24 +43,61 @@ ipcMain.on('newFile', function(createNewFile) {
 
 ipcMain.on('saveFile', function (fileDataSend, filedata) {
   //show save dialog
-  dialog.showSaveDialog({
-    defaultPath: '~/Document.txt',
-    filters: [
-      {name: 'Text Files', extensions: ['txt']},
-      {name: 'All Files', extensions: ['*']}
-    ]
-    //use node fs to save
-  }, function(filename) {
-    //write the file
+  if(savedAlready === false) {
+    dialog.showSaveDialog({
+      defaultPath: '~/Document.txt',
+      filters: [
+        {name: 'Text Files', extensions: ['txt']},
+        {name: 'All Files', extensions: ['*']}
+      ]
+      //use node fs to save
+    }, function(filename) {
+      //write the file
+      try {
+        fs.writeFile(filename, filedata.content, function() {
+          console.log('Saved!');
+          //change HTML to show filename AFTER save (not to type in filename in page!)
+          //send filename back to ipcRenderer to make filename box show filename
+          fileDataSend.sender.send('filenameSend', {
+            filenameToDisplay: filename
+            //filenameToDisplay is the filename in the object sent to ipcRenderer
+          });
+
+          //don't display save dialog again
+          savedAlready = true;
+          console.log(savedAlready);
+          //set global filename variable
+          filenameGlobal = filename;
+        });
+      } catch(error) {
+        console.error(error);
+        /*
+        bug: if save is cancelled:
+        "TypeError: path must be a string or Buffer"
+        is thrown
+        */
+      }
+    });
+  } else if(savedAlready === true) {
     try {
-      fs.writeFile(filename, filedata.content, function() {
+      
+      //BUG: filenameGlobal is an object?!?!
+      //must console.log it
+
+      fs.writeFile(filenameGlobal, filedata.content, function() {
         console.log('Saved!');
         //change HTML to show filename AFTER save (not to type in filename in page!)
         //send filename back to ipcRenderer to make filename box show filename
         fileDataSend.sender.send('filenameSend', {
-          filenameToDisplay: filename
+          filenameToDisplay: filenameGlobal
           //filenameToDisplay is the filename in the object sent to ipcRenderer
         });
+
+        //don't display save dialog again
+        savedAlready = true;
+        console.log(savedAlready);
+        //set global filename variable
+        //filenameGlobal = filename;
       });
     } catch(error) {
       console.error(error);
@@ -59,7 +107,8 @@ ipcMain.on('saveFile', function (fileDataSend, filedata) {
       is thrown
       */
     }
-  });
+    //OK DONE 26/8 COPY CODE TO OTHER PARTS LATER!
+  }
 });
 
 ipcMain.on('openFile', function (fileContentSend) {
@@ -82,6 +131,12 @@ ipcMain.on('openFile', function (fileContentSend) {
           filename: filename[0],
           fileContents: data
         });
+
+        //don't display save dialog again
+        savedAlready = true;
+        console.log(savedAlready);
+        //set global filename variable
+        filenameGlobal = filename;
       });
     } catch(error) {
       console.error(error);
