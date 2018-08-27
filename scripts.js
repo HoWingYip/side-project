@@ -7,8 +7,8 @@ function newFile() {
 
 ipcRenderer.on('newFileData', function(a, filename) {
   console.log("File path:", filename.filenameToDisplay);
-  document.getElementById('filename').innerHTML = "Path: " + filename.filenameToDisplay;
-  document.getElementById('editor').innerHTML = "";
+  document.getElementById('filename').value = "Path: " + filename.filenameToDisplay;
+  document.getElementById('editor').value = "";
 });
 
 //save file
