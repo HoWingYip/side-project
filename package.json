@@ -18,14 +18,15 @@
   },
   "homepage": "https://github.com/HoWingYip/side-project#readme",
   "devDependencies": {
-    "electron": "^2.0.8",
-    "fs": "0.0.1-security"
+    "asar": "^0.14.3",
+    "eslint": "^5.4.0"
   },
   "dependencies": {
-    "electron": "^2.0.8",
-    "fs": "0.0.1-security"
+    "electron": "^2.0.8"
   },
   "keywords": [
-    "electron"
+    "electron",
+    "text-editor",
+    "editor"
   ]
 }
