@@ -35,3 +35,9 @@ ipcRenderer.on('allDataSend', function(a, fileContents) {
   //document.getElementById('editor').innerHTML = "";
   document.getElementById('editor').innerHTML = fileContents.fileContents;
 });
+
+function saveAs(textareacontent) {
+  ipcRenderer.send('saveAs', {
+    content: textareacontent
+  });
+}

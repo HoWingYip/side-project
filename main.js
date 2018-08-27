@@ -100,6 +100,41 @@ ipcMain.on('saveFile', function (fileDataSend, filedata) {
   }
 });
 
+ipcMain.on('saveAs', function (fileSaveAsDataSend, filedata) {
+  dialog.showSaveDialog({
+    defaultPath: '~/Document.txt',
+    filters: [
+      {name: 'Text Files', extensions: ['txt']},
+      {name: 'All Files', extensions: ['*']}
+    ]
+    //use node fs to save
+  }, function(filename) {
+    //write the file
+    try {
+      fs.writeFile(filename, filedata.content, function() {
+        console.log('Saved!');
+        fileSaveAsDataSend.sender.send('filenameSend', {
+          filenameToDisplay: filename
+          //filenameToDisplay is the filename in the object sent to ipcRenderer
+        });
+
+        //don't display save dialog again
+        savedAlready = true;
+        console.log(savedAlready);
+        //set global filename variable
+        filenameGlobal = filename;
+      });
+    } catch(error) {
+      console.error(error);
+      /*
+      bug: if save is cancelled:
+      "TypeError: path must be a string or Buffer"
+      is thrown
+      */
+    }
+  });
+});
+
 ipcMain.on('openFile', function (fileContentSend) {
   //show open dialog
   dialog.showOpenDialog({
