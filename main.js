@@ -56,8 +56,6 @@ ipcMain.on('saveFile', function (fileDataSend, filedata) {
       try {
         fs.writeFile(filename, filedata.content, function() {
           console.log('Saved!');
-          //change HTML to show filename AFTER save (not to type in filename in page!)
-          //send filename back to ipcRenderer to make filename box show filename
           fileDataSend.sender.send('filenameSend', {
             filenameToDisplay: filename
             //filenameToDisplay is the filename in the object sent to ipcRenderer
@@ -80,14 +78,8 @@ ipcMain.on('saveFile', function (fileDataSend, filedata) {
     });
   } else if(savedAlready === true) {
     try {
-      
-      //BUG: filenameGlobal is an object?!?!
-      //must console.log it
-
       fs.writeFile(filenameGlobal, filedata.content, function() {
         console.log('Saved!');
-        //change HTML to show filename AFTER save (not to type in filename in page!)
-        //send filename back to ipcRenderer to make filename box show filename
         fileDataSend.sender.send('filenameSend', {
           filenameToDisplay: filenameGlobal
           //filenameToDisplay is the filename in the object sent to ipcRenderer
@@ -96,8 +88,6 @@ ipcMain.on('saveFile', function (fileDataSend, filedata) {
         //don't display save dialog again
         savedAlready = true;
         console.log(savedAlready);
-        //set global filename variable
-        //filenameGlobal = filename;
       });
     } catch(error) {
       console.error(error);
@@ -107,7 +97,6 @@ ipcMain.on('saveFile', function (fileDataSend, filedata) {
       is thrown
       */
     }
-    //OK DONE 26/8 COPY CODE TO OTHER PARTS LATER!
   }
 });
 
