@@ -15,4 +15,10 @@
 
 .topbar {
   width: -webkit-fill-available;
+  padding: 5px 7px;
+}
+
+.titlebar-button {
+  margin: 5px;
+  background-color: #c1c1c1;
 }
