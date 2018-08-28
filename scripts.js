@@ -31,9 +31,9 @@ function openFile() {
 
 ipcRenderer.on('allDataSend', function(a, fileContents) {
   console.log(fileContents);
-  document.getElementById('filename').innerHTML = "Path: " + fileContents.filename;
+  document.getElementById('filename').value = "Path: " + fileContents.filename;
   //document.getElementById('editor').innerHTML = "";
-  document.getElementById('editor').innerHTML = fileContents.fileContents;
+  document.getElementById('editor').value = fileContents.fileContents;
 });
 
 function saveAs(textareacontent) {
