@@ -20,11 +20,10 @@
   "devDependencies": {
     "asar": "^0.14.3",
     "electron-packager": "^12.1.1",
-    "eslint": "^5.4.0"
-  },
-  "dependencies": {
+    "eslint": "^5.4.0",
     "electron": "^2.0.8"
   },
+  "dependencies": {},
   "keywords": [
     "electron",
     "text-editor",
