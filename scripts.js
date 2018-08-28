@@ -21,8 +21,9 @@ function saveFile(textareacontent) {
 
 ipcRenderer.on('filenameSend', function(a, filename) {
   console.log("File path:", filename.filenameToDisplay);
-  document.getElementById('filename').innerHTML = "Path: " + filename.filenameToDisplay;
+  document.getElementById('filename').value = "Path: " + filename.filenameToDisplay;
 });
+//filenameSend is used for both Save and Save As
 
 //open file
 function openFile() {
@@ -32,10 +33,10 @@ function openFile() {
 ipcRenderer.on('allDataSend', function(a, fileContents) {
   console.log(fileContents);
   document.getElementById('filename').value = "Path: " + fileContents.filename;
-  //document.getElementById('editor').innerHTML = "";
   document.getElementById('editor').value = fileContents.fileContents;
 });
 
+//save file as another file
 function saveAs(textareacontent) {
   ipcRenderer.send('saveAs', {
     content: textareacontent
