@@ -1,5 +1,6 @@
 {
   "name": "side-project",
+  "productName": "Text Editor",
   "version": "1.0.0",
   "description": "Hello, I'm Wing Yip. I'm experimenting with the Electron framework to build a simple text editor that can open and save .txt files to a machine. Any help in the form of contributing to the repo or teaching me how to use Electron is appreciated more than you can imagine!",
   "main": "main.js",
