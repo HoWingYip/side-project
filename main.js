@@ -1,8 +1,8 @@
 //my code
 //var remote = require('electron');
-const { ipcMain } = require('electron');
-var fs = require('fs');
-const {dialog} = require('electron');
+const { ipcMain } = require("electron");
+var fs = require("fs");
+const {dialog} = require("electron");
 //do NOT change between ES6 and JS syntax because bloody MAGIC
 
 //boolean to determine whether or not to open dialogs
@@ -10,215 +10,215 @@ const {dialog} = require('electron');
 var savedAlready = false;
 var filenameGlobal;
 
-ipcMain.on('newFile', function(createNewFile) {
-  //show save dialog (new file)
-  dialog.showSaveDialog({
-    defaultPath: '~/Document.txt',
-    filters: [
-      {name: 'Text Files', extensions: ['txt']},
-      {name: 'All Files', extensions: ['*']}
-    ]
-  }, function(filename) {
-      //write the file
-      try {
-        fs.writeFile(filename, "", function() {
-          //writes blank file to disk because creating new
-          console.log('New file created!');
-          createNewFile.sender.send('newFileData', {
-            filenameToDisplay: filename
-            //filenameToDisplay is the filename in the object sent to ipcRenderer
-          });
+ipcMain.on("newFile", function(createNewFile) {
+	//show save dialog (new file)
+	dialog.showSaveDialog({
+		defaultPath: "~/Document.txt",
+		filters: [
+			{name: "Text Files", extensions: ["txt"]},
+			{name: "All Files", extensions: ["*"]}
+		]
+	}, function(filename) {
+		//write the file
+		try {
+			fs.writeFile(filename, "", function() {
+				//writes blank file to disk because creating new
+				console.log("New file created!");
+				createNewFile.sender.send("newFileData", {
+					filenameToDisplay: filename
+					//filenameToDisplay is the filename in the object sent to ipcRenderer
+				});
 
-          //don't display save dialog again
-          savedAlready = true;
-          console.log(savedAlready);
-          //set global filename variable
-          filenameGlobal = filename;
-        });
-      } catch(error) {
-        console.error(error);
-      }
-  });
+				//don't display save dialog again
+				savedAlready = true;
+				console.log(savedAlready);
+				//set global filename variable
+				filenameGlobal = filename;
+			});
+		} catch(error) {
+			console.error(error);
+		}
+	});
 });
 
-ipcMain.on('saveFile', function (fileDataSend, filedata) {
-  //show save dialog
-  if(savedAlready === false) {
-    dialog.showSaveDialog({
-      defaultPath: '~/Document.txt',
-      filters: [
-        {name: 'Text Files', extensions: ['txt']},
-        {name: 'All Files', extensions: ['*']}
-      ]
-      //use node fs to save
-    }, function(filename) {
-      //write the file
-      try {
-        fs.writeFile(filename, filedata.content, function() {
-          console.log('Saved!');
-          fileDataSend.sender.send('filenameSend', {
-            filenameToDisplay: filename
-            //filenameToDisplay is the filename in the object sent to ipcRenderer
-          });
+ipcMain.on("saveFile", function (fileDataSend, filedata) {
+	//show save dialog
+	if(savedAlready === false) {
+		dialog.showSaveDialog({
+			defaultPath: "~/Document.txt",
+			filters: [
+				{name: "Text Files", extensions: ["txt"]},
+				{name: "All Files", extensions: ["*"]}
+			]
+			//use node fs to save
+		}, function(filename) {
+			//write the file
+			try {
+				fs.writeFile(filename, filedata.content, function() {
+					console.log("Saved!");
+					fileDataSend.sender.send("filenameSend", {
+						filenameToDisplay: filename
+						//filenameToDisplay is the filename in the object sent to ipcRenderer
+					});
 
-          //don't display save dialog again
-          savedAlready = true;
-          console.log(savedAlready);
-          //set global filename variable
-          filenameGlobal = filename;
-        });
-      } catch(error) {
-        console.error(error);
-        /*
+					//don't display save dialog again
+					savedAlready = true;
+					console.log(savedAlready);
+					//set global filename variable
+					filenameGlobal = filename;
+				});
+			} catch(error) {
+				console.error(error);
+				/*
         bug: if save is cancelled:
         "TypeError: path must be a string or Buffer"
         is thrown
         */
-      }
-    });
-  } else if(savedAlready === true) {
-    try {
-      fs.writeFile(filenameGlobal, filedata.content, function() {
-        console.log('Saved!');
-        fileDataSend.sender.send('filenameSend', {
-          filenameToDisplay: filenameGlobal
-          //filenameToDisplay is the filename in the object sent to ipcRenderer
-        });
+			}
+		});
+	} else if(savedAlready === true) {
+		try {
+			fs.writeFile(filenameGlobal, filedata.content, function() {
+				console.log("Saved!");
+				fileDataSend.sender.send("filenameSend", {
+					filenameToDisplay: filenameGlobal
+					//filenameToDisplay is the filename in the object sent to ipcRenderer
+				});
 
-        //don't display save dialog again
-        savedAlready = true;
-        console.log(savedAlready);
-      });
-    } catch(error) {
-      console.error(error);
-      /*
+				//don't display save dialog again
+				savedAlready = true;
+				console.log(savedAlready);
+			});
+		} catch(error) {
+			console.error(error);
+			/*
       bug: if save is cancelled:
       "TypeError: path must be a string or Buffer"
       is thrown
       */
-    }
-  }
+		}
+	}
 });
 
-ipcMain.on('saveAs', function (fileSaveAsDataSend, filedata) {
-  dialog.showSaveDialog({
-    defaultPath: '~/Document.txt',
-    filters: [
-      {name: 'Text Files', extensions: ['txt']},
-      {name: 'All Files', extensions: ['*']}
-    ]
-    //use node fs to save
-  }, function(filename) {
-    //write the file
-    try {
-      fs.writeFile(filename, filedata.content, function() {
-        console.log('Saved!');
-        fileSaveAsDataSend.sender.send('filenameSend', {
-          filenameToDisplay: filename
-          //filenameToDisplay is the filename in the object sent to ipcRenderer
-        });
+ipcMain.on("saveAs", function (fileSaveAsDataSend, filedata) {
+	dialog.showSaveDialog({
+		defaultPath: "~/Document.txt",
+		filters: [
+			{name: "Text Files", extensions: ["txt"]},
+			{name: "All Files", extensions: ["*"]}
+		]
+		//use node fs to save
+	}, function(filename) {
+		//write the file
+		try {
+			fs.writeFile(filename, filedata.content, function() {
+				console.log("Saved!");
+				fileSaveAsDataSend.sender.send("filenameSend", {
+					filenameToDisplay: filename
+					//filenameToDisplay is the filename in the object sent to ipcRenderer
+				});
 
-        //don't display save dialog again
-        savedAlready = true;
-        console.log(savedAlready);
-        //set global filename variable
-        filenameGlobal = filename;
-      });
-    } catch(error) {
-      console.error(error);
-      /*
+				//don't display save dialog again
+				savedAlready = true;
+				console.log(savedAlready);
+				//set global filename variable
+				filenameGlobal = filename;
+			});
+		} catch(error) {
+			console.error(error);
+			/*
       bug: if save is cancelled:
       "TypeError: path must be a string or Buffer"
       is thrown
       */
-    }
-  });
+		}
+	});
 });
 
-ipcMain.on('openFile', function (fileContentSend) {
-  //show open dialog
-  dialog.showOpenDialog({
-    defaultPath: '~/',
-    filters: [
-      {name: 'Text Files', extensions: ['txt']},
-      {name: 'All Files', extensions: ['*']}
-    ],
-    properties: ['openFile']
-  }, function(filename) {
-    //open the file
-    try {
-      fs.readFile(filename[0], "utf8", function(err, data) {
-        //err is useless because it's gonna be caught later
-        console.log("Opened!");
-        //console.log(data);
-        fileContentSend.sender.send('allDataSend', {
-          filename: filename[0],
-          fileContents: data
-        });
+ipcMain.on("openFile", function (fileContentSend) {
+	//show open dialog
+	dialog.showOpenDialog({
+		defaultPath: "~/",
+		filters: [
+			{name: "Text Files", extensions: ["txt"]},
+			{name: "All Files", extensions: ["*"]}
+		],
+		properties: ["openFile"]
+	}, function(filename) {
+		//open the file
+		try {
+			fs.readFile(filename[0], "utf8", function(err, data) {
+				//err is useless because it's gonna be caught later
+				console.log("Opened!");
+				//console.log(data);
+				fileContentSend.sender.send("allDataSend", {
+					filename: filename[0],
+					fileContents: data
+				});
 
-        //don't display save dialog again
-        savedAlready = true;
-        console.log(savedAlready);
-        //set global filename variable
-        filenameGlobal = filename[0];
-      });
-    } catch(error) {
-      console.error(error);
-    }
-  });
+				//don't display save dialog again
+				savedAlready = true;
+				console.log(savedAlready);
+				//set global filename variable
+				filenameGlobal = filename[0];
+			});
+		} catch(error) {
+			console.error(error);
+		}
+	});
 });
 
 
 //app core code, basically
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow } = require("electron");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 
 function createWindow() {
-  // Create the browser window.
-  win = new BrowserWindow({ show: false });
-  win.once('ready-to-show', () => {
-    win.show();
-  });
-  win.maximize();
+	// Create the browser window.
+	win = new BrowserWindow({ show: false });
+	win.once("ready-to-show", () => {
+		win.show();
+	});
+	win.maximize();
 
-  // and load the index.html of the app.
-  win.loadFile('index.html');
+	// and load the index.html of the app.
+	win.loadFile("index.html");
 
-  // Open the DevTools (disabled by me).
-  //win.webContents.openDevTools()
+	// Open the DevTools (disabled by me).
+	//win.webContents.openDevTools()
 
-  // Emitted when the window is closed.
-  win.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    win = null;
-  });
+	// Emitted when the window is closed.
+	win.on("closed", () => {
+		// Dereference the window object, usually you would store windows
+		// in an array if your app supports multi windows, this is the time
+		// when you should delete the corresponding element.
+		win = null;
+	});
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on("ready", createWindow);
 
 // Quit when all windows are closed.
-app.on('window-all-closed', () => {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+app.on("window-all-closed", () => {
+	// On macOS it is common for applications and their menu bar
+	// to stay active until the user quits explicitly with Cmd + Q
+	if (process.platform !== "darwin") {
+		app.quit();
+	}
 });
 
-app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (win === null) {
-    createWindow();
-  }
+app.on("activate", () => {
+	// On macOS it's common to re-create a window in the app when the
+	// dock icon is clicked and there are no other windows open.
+	if (win === null) {
+		createWindow();
+	}
 });
 
 // In this file you can include the rest of your app's specific main process
